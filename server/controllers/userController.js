@@ -67,6 +67,37 @@ const userController = {
       res.status(400).json({ success: false, error: error.message });
     }
   },
+  changePassword: async function (req, res) {
+    try {
+      //see if a user exists with this email
+      let userExists = await User.findOne({ email: req.body.email });
+      if (!userExists) {
+        throw {
+          message: "There's no account affiliated with this email address.",
+        };
+      }
+      //compare stored hashed password and password on post request
+      let isCorrectPassword = await bcrypt.compareSync(
+        req.body.existingPassword,
+        userExists.password
+      );
+      if (!isCorrectPassword) {
+        throw { message: "Invalid password." };
+      }
+      userExists.password = req.body.newPassword;
+      await userExists.save();
+      res.status(200).json({ success: true });
+      // //return a jsonwebtoken with userID embedded
+      // let token = await jwt.sign(
+      //   { userId: userExists._id },
+      //   process.env.JWT_SECRET,
+      //   { expiresIn: "1 day" }
+      // );
+      // res.status(200).json({ success: true, token: token });
+    } catch (error) {
+      res.status(400).json({ success: false, error: error.message });
+    }
+  },
 };
 
 module.exports = {
