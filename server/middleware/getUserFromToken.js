@@ -12,8 +12,9 @@ const getUserIdFromToken = async function (req, res, next) {
         throw { message: "You do not have permission to access this data." };
       }
 
-      //Add userId to request for access in other middleware
+      //Add userId to request for access in other middleware, add isInstructor to request
       req.userId = isValid.userId;
+      req.isInstructor = isValid.isInstructor;
       next();
     }
     next();

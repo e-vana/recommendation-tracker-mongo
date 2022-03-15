@@ -1,9 +1,9 @@
-let mongoose = require('mongoose');
+let mongoose = require("mongoose");
 
 let userSchema = mongoose.Schema({
   emailAddress: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: Date,
@@ -13,10 +13,14 @@ let userSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
-})
+  isInstructor: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-let User = mongoose.model('User', userSchema);
+let User = mongoose.model("User", userSchema);
 
 module.exports = {
-  User
-}
+  User,
+};

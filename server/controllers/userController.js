@@ -27,11 +27,22 @@ const userController = {
       const hashed = await bcrypt.hashSync(req.body.password, saltValue);
 
       //create new user
-      const newUser = new User({
-        dateCreated: Date.now(),
-        password: hashed,
-        email: req.body.email,
-      });
+      //if is Instructor is checked
+      if (req.body.isInstructor) {
+        const newUser = new User({
+          dateCreated: Date.now(),
+          password: hashed,
+          email: req.body.email,
+          isInstructor: true,
+        });
+      } else {
+        const newUser = new User({
+          dateCreated: Date.now(),
+          password: hashed,
+          email: req.body.email,
+        });
+      }
+
       await newUser.save();
       res.status(200).json({ success: true });
     } catch (error) {
@@ -58,9 +69,9 @@ const userController = {
 
       //return a jsonwebtoken with userID embedded
       let token = await jwt.sign(
-        { userId: userExists._id },
+        { userId: userExists._id, isInstructor: userExists.isInstructor },
         process.env.JWT_SECRET,
-        { expiresIn: "1 day" }
+        { expiresIn: "7 day" }
       );
       res.status(200).json({ success: true, token: token });
     } catch (error) {
