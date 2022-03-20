@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const getUserIdFromToken = async function (req, res, next) {
   try {
     //get bearer token from HTTP request
@@ -15,7 +16,6 @@ const getUserIdFromToken = async function (req, res, next) {
       //Add userId to request for access in other middleware, add isInstructor to request
       req.userId = isValid.userId;
       req.isInstructor = isValid.isInstructor;
-      next();
     }
     next();
   } catch (error) {

@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const userController = {
   getUsers: async function (req, res) {
     try {
-      console.log("fired getUsers controller");
       // let users = await User.find();
       // res.send(users);
       res.send({ success: true });
@@ -26,21 +25,18 @@ const userController = {
       const saltValue = await bcrypt.genSaltSync(10);
       const hashed = await bcrypt.hashSync(req.body.password, saltValue);
 
+
+      console.log(req.isInstructor);
       //create new user
       //if is Instructor is checked
-      if (req.body.isInstructor) {
-        const newUser = new User({
-          dateCreated: Date.now(),
-          password: hashed,
-          email: req.body.email,
-          isInstructor: true,
-        });
-      } else {
-        const newUser = new User({
-          dateCreated: Date.now(),
-          password: hashed,
-          email: req.body.email,
-        });
+      const newUser = new User({
+        dateCreated: Date.now(),
+        password: hashed,
+        email: req.body.email,
+      });
+
+      if (req.isInstructor) {
+        newUser.isInstructor = true;
       }
 
       await newUser.save();
@@ -52,6 +48,9 @@ const userController = {
   login: async function (req, res) {
     try {
       //see if a user exists with this email
+      console.log(req.isInstructor)
+      console.log(req.userId)
+
       let userExists = await User.findOne({ email: req.body.email });
       if (!userExists) {
         throw {

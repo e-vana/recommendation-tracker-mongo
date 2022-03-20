@@ -1,9 +1,29 @@
 //App setup and imports
 require("dotenv").config();
 const { default: mongoose } = require("mongoose");
+// const { app } = require("./setup");
+const morgan = require("morgan")
+const express = require("express");
+const app = express();
 const { getUserIdFromToken } = require("./middleware/getUserFromToken");
-const { app } = require("./setup");
+
 const port = process.env.PORT;
+
+app.use(morgan('tiny'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 
 app.use(getUserIdFromToken);
 app.use("/api/users", require("./routes/users"));

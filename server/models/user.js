@@ -1,22 +1,22 @@
 let mongoose = require("mongoose");
 
 let userSchema = mongoose.Schema({
-  emailAddress: {
+  email: {
     type: String,
     required: true,
   },
   password: {
-    type: Date,
+    type: String,
     required: false,
-  },
-  dateCreated: {
-    type: Date,
-    required: true,
   },
   isInstructor: {
     type: Boolean,
     default: false,
   },
+
+},
+{
+  timestamps: true
 });
 
 let User = mongoose.model("User", userSchema);
