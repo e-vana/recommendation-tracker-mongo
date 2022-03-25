@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <form action="">
+    <form @submit.prevent="">
       <label for="">Email Address</label>
       <br>
       <input type="text" v-model="email" placeholder="johndoe@school.edu">
@@ -9,9 +9,15 @@
       <br>
       <input type="password" v-model="password">
       <br>
-      <button @click="login" class="button-login">Login</button>
+      
+      <div class="button-container">
+        <button @click="login" type="submit" class="button-login">
+          <span v-if="!loading">Login</span>
+          <Spinner v-if="loading" color='1F832F' :size="15" :thickness="3"></Spinner>
+        </button>
+      </div>
+
     </form>
-      <Spinner></Spinner>
 
   </div>
 </template>
@@ -35,6 +41,7 @@ export default {
   methods: {
     login: async function(){
       try {
+        this.loading = true;
         let body = { 
           emailAddress: this.email,
           password: this.password
@@ -51,8 +58,11 @@ export default {
 </script>
 
 <style>
+.button-container {
+  text-align: right;
+}
 .login-container {
-  max-width: 400px;
+  max-width: 300px;
   margin: 0px auto;
 }
 label {

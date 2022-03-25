@@ -1,41 +1,47 @@
 <template>
-  <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    <div class="lds-ring" :style="cssProp"><div ></div><div></div><div></div><div></div></div>
 </template>
 
 <script>
 export default {
   props: {
-    color: String,
-    size: Number
+    color: {
+      type: String,
+      default: '000'
+    },
+    size: Number,
+    thickness: Number
   },
   computed: {
-    cssProps: function(){
+    cssProp: function(){
       return {
-        '--spinner-color': this.props.color,
-        '--spinner-size': this.props.size + 'px'
+        '--spinner-color': '#' + this.color,
+        '--spinner-size': this.size + 'px',
+        '--spinner-thickness': this.thickness + 'px'
       }
     }
   }
 }
 </script>
 
-<style>.lds-ring {
+<style>
+.lds-ring {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
 }
 .lds-ring div {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 40px;
-  height: 40px;
-  margin: 8px;
-  border: 8px solid #fff;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border: var(--spinner-thickness) solid #fff;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: rgb(116, 68, 68) transparent transparent transparent;
+  border-color: var(--spinner-color) transparent transparent transparent;
+
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;

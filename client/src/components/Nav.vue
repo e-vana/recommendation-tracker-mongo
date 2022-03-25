@@ -2,14 +2,20 @@
         <div class="nav">
         <ul>
           <li>About</li>
-          <li><button class="button-login">Login</button></li>
+          <li v-if="routeName == 'Register'"><button class="button-login">Login</button></li>
+          <li v-if="routeName !== 'Login'"><button class="button-login">Sign Up</button></li>
+
         </ul>
       </div>
 </template>
 
 <script>
 export default {
-
+  computed: {
+    routeName: function(){
+      return this.$route.name
+    }
+  }
 }
 </script>
 
