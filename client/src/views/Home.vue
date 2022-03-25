@@ -5,7 +5,7 @@
       <div class="hero-text">
         <h1>Letter Tracker</h1>
         <p>Help your students get you the information you require to complete and manage their letters of recomendation.</p>
-        <button class="button-primary">Instructor Signup</button>
+        <button class="button-primary" @click="routeHandler">Instructor Signup</button>
       </div>
       <div class="hero-image">
         <img src="@/assets/hero-banner.jpg" alt="">
@@ -40,6 +40,12 @@
 
 export default {
   name: 'Home',
+  methods: {
+    routeHandler: function(){
+
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 
@@ -88,6 +94,7 @@ hr {
   font-weight: bold;
   text-transform: uppercase;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.075);
+  cursor: pointer;
 }
 
 
@@ -121,10 +128,6 @@ hr {
 @media only screen and (max-width: 1000px){
   .hero-text {
     min-width: 50%;
-  }
-  .hero-image {
-    /* min-width: 50%; */
-
   }
   .hero-image img {
     height: auto;
