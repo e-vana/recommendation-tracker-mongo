@@ -4,7 +4,7 @@
     <div class="hero-container">
       <div class="hero-text">
         <h1>Letter Tracker</h1>
-        <p>Help your students get you the information you require to complete and manage their letters of recomendation.</p>
+        <p>Help your students get you the information you require to complete their letters of recomendation.</p>
         <button class="button-primary" @click="routeHandler">Instructor Signup</button>
       </div>
       <div class="hero-image">

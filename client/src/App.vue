@@ -21,8 +21,11 @@ export default {
 :root {
   --primary-black: rgb(26, 26, 26);
   --primary-black-lighter: rgb(66, 66, 66);
+  --primary-black-lightest: rgb(160, 160, 160);
   --green: #1F832F;
   --green-lighter: #A3FBB1;
+  --red: rgb(160, 53, 53);
+  --red-lighter: rgb(241, 194, 194);
 }
 body, html {
     margin: 0px;

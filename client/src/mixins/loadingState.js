@@ -2,6 +2,8 @@ const loadingState = {
   data(){
     return {
       loading: false,
+      error: false,
+      errorMessage: null
     }
   },
   methods: {

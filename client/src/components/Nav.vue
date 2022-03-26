@@ -2,9 +2,8 @@
         <div class="nav">
         <ul>
           <li>About</li>
-          <li v-if="routeName == 'Register'"><button class="button-login">Login</button></li>
-          <li v-if="routeName !== 'Login'"><button class="button-login">Sign Up</button></li>
-
+          <li v-if="routeName == 'Register'"><router-link to="/login"><button class="button-login">Login</button></router-link></li>
+          <li v-if="routeName == 'Login'"><router-link to="/register"><button class="button-login">Sign Up</button></router-link></li>
         </ul>
       </div>
 </template>
