@@ -3,16 +3,16 @@
     <form @submit.prevent="">
       <label for="">Email Address</label>
       <br>
-      <input type="text" v-model="email" placeholder="johndoe@school.edu" class="no-margin">
+      <input type="text" v-model="email" placeholder="johndoe@school.edu" class="no-margin" required>
       <p class="register-help-text">In order to register an instructor account you need to use a valid .edu email address.</p>
       <br>
       <label for="">Password</label>
       <br>
-      <input type="password" v-model="password">
+      <input type="password" v-model="password" required>
       <br>
       <label for="">Confirm Password</label>
       <br>
-      <input type="password" v-model="passwordConfirm">
+      <input type="password" v-model="passwordConfirm" required>
       <br>
       <div class="button-container">
         <button @click="register" type="submit" class="button-login">
@@ -20,7 +20,9 @@
           <Spinner v-if="loading" color='1F832F' :size="15" :thickness="3"></Spinner>
         </button>
       </div>
-      <ErrorBlock v-if="error" :errorMessage="errorMessage"></ErrorBlock>
+      <transition name="fade" mode="out-in">
+        <alert-block v-if="error" :alertMessage="errorMessage" variant="error" :key="errorMessage" ></alert-block>
+      </transition>
 
     </form>
 
@@ -29,15 +31,15 @@
 
 <script>
 import Spinner from '@/components/loaders/Spinner.vue'
-import ErrorBlock from '@/components/ErrorBlock.vue'
 import loadingState from '@/mixins/loadingState.js'
 import {checkPassword} from '@/helpers/checkPassword.js'
+import AlertBlock from '../components/AlertBlock.vue'
 // import axios from 'axios';
 
 export default {
   components: {
     Spinner,
-    ErrorBlock
+    AlertBlock
   },
   mixins: [loadingState],
   data() {
@@ -52,6 +54,9 @@ export default {
       try {
         this.loading = true;
         this.error = false;
+        if(!this.email || !this.password || !this.passwordConfirm){
+          throw 'Complete the form fields.'
+        }
         let passwordCheckComplete = checkPassword(this.password);
         if(!passwordCheckComplete.success){
           throw passwordCheckComplete.message;
@@ -59,9 +64,12 @@ export default {
         if(this.password !== this.passwordConfirm){
           throw 'Passwords do not match.';
         }
+        if(!this.email.includes('.edu')){
+          throw 'This email is not a .edu email address.'
+        }
         console.log("Registered succesfully.")
 
-        
+
         this.loading = false;
         this.error = false;
       } catch (error) {
@@ -76,6 +84,14 @@ export default {
 </script>
 
 <style>
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 .button-container {
   text-align: right;
 }
@@ -111,6 +127,9 @@ input {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.075);
   cursor: pointer;
 
+}
+.button-login:focus {
+  outline: 2px solid var(--green);
 }
 
 .register-help-text{

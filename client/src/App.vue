@@ -24,8 +24,8 @@ export default {
   --primary-black-lightest: rgb(160, 160, 160);
   --green: #1F832F;
   --green-lighter: #A3FBB1;
-  --red: rgb(160, 53, 53);
-  --red-lighter: rgb(241, 194, 194);
+  --red: #a03535;
+  --red-lighter: #fcdfdf;
 }
 body, html {
     margin: 0px;
