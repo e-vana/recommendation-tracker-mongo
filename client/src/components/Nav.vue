@@ -1,9 +1,13 @@
 <template>
         <div class="nav">
         <ul>
-          <li>About</li>
-          <li v-if="routeName == 'Register'"><router-link to="/login"><button class="button-login">Login</button></router-link></li>
-          <li v-if="routeName == 'Login'"><router-link to="/register"><button class="button-login">Sign Up</button></router-link></li>
+          <li v-if="routeName != 'Home'"><router-link to="/">Home</router-link></li>
+          <li v-if="!$store.state.isLoggedIn && routeName != 'Login'"><router-link to="/login"><button class="button-login">Login</button></router-link></li>
+          <li v-if="!$store.state.isLoggedIn && routeName != 'Register' "><router-link to="/register"><button class="button-login">Sign Up</button></router-link></li>
+          <li v-if="$store.state.isLoggedIn && routeName != 'Dashboard'"><router-link to="/dashboard"><button class="button-login">Dashboard</button></router-link></li>
+          <li v-if="$store.state.isLoggedIn"><button @click="signOut" class="button-login">Sign Out</button></li>
+
+
         </ul>
       </div>
 </template>
@@ -13,6 +17,13 @@ export default {
   computed: {
     routeName: function(){
       return this.$route.name
+    }
+  },
+  methods: {
+    signOut: function(){
+          this.$store.dispatch("logout");
+          this.$store.dispatch("setToken", null);
+          this.$router.push('/');
     }
   }
 }
@@ -48,7 +59,13 @@ export default {
   padding: 0px 0px 0px 30px;
   margin: 0px;
   display: inline;
+}
+.nav a {
+  text-decoration: none;
 
 }
-
+.settings-icon img {
+  height: 50px;
+  width: 50px;
+}
 </style>

@@ -16,7 +16,9 @@
           <Spinner v-if="loading" color='1F832F' :size="15" :thickness="3"></Spinner>
         </button>
       </div>
-
+      <transition name="fade" mode="out-in">
+        <alert-block v-if="error" :alertMessage="errorMessage" variant="error" :key="errorMessage" ></alert-block>
+      </transition>
     </form>
 
   </div>
@@ -25,11 +27,13 @@
 <script>
 import Spinner from '@/components/loaders/Spinner.vue'
 import loadingState from '@/mixins/loadingState.js'
+import AlertBlock from '../components/AlertBlock.vue'
 import axios from 'axios';
 
 export default {
   components: {
-    Spinner
+    Spinner,
+    AlertBlock
   },
   mixins: [loadingState],
   data() {
@@ -43,14 +47,22 @@ export default {
       try {
         this.loading = true;
         let body = { 
-          emailAddress: this.email,
+          email: this.email,
           password: this.password
         }
-        let tryLogin = await axios.post(process.env.VUE_APP_BASE_URL+'/api/login', body);
-        let token = tryLogin.response.data;
-        console.log(token)
+        let tryLogin = await axios.post(process.env.VUE_APP_BASE_URL+'/api/users/login', body);
+        if(tryLogin.data.token){
+          this.$store.dispatch("login");
+          this.$store.dispatch("setToken", tryLogin.data.token);
+          this.loading = false;
+          this.error = false;
+          this.$router.push('/dashboard');
+        }
+
       } catch (error) {
-        console.log(error)
+        this.loading = false;
+        this.error = true;
+        this.errorMessage = error.response.data.error;
       }
     }
   }

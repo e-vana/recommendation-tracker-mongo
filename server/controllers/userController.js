@@ -48,8 +48,6 @@ const userController = {
   login: async function (req, res) {
     try {
       //see if a user exists with this email
-      console.log(req.isInstructor)
-      console.log(req.userId)
 
       let userExists = await User.findOne({ email: req.body.email });
       if (!userExists) {

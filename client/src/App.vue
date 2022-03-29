@@ -26,6 +26,8 @@ export default {
   --green-lighter: #A3FBB1;
   --red: #a03535;
   --red-lighter: #fcdfdf;
+  --alert-primary: #151c7e;
+  --alert-secondary: #c5d6ec;
 }
 body, html {
     margin: 0px;
