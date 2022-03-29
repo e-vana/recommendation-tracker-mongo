@@ -2,3 +2,4 @@ refactor to TS
 refactor to ES6 import/export
 Finish user controller
 Implement email send functionality
+https://dev.to/kabartolo/how-to-document-an-express-api-with-swagger-ui-and-jsdoc-50do
