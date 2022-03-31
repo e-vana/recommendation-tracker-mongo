@@ -8,7 +8,10 @@
     <h2>Upcoming Deadlines</h2>
     <alert-block v-if="upcomingDeadlines == null || upcomingDeadlines.length == 0" alertMessage="There are no upcoming deadlines at this time." variant="success"></alert-block>
     <h2>Pending Requests</h2>
-    <alert-block v-if="pendingRequests == null || pendingRequests.length == 0" alertMessage="There are no pending requests for information at this time." variant="success"></alert-block>
+    <alert-block v-if="pendingRequests == null || pendingRequests.length == 0" alertMessage="There are no pending requests for student information at this time." variant="success"></alert-block>
+    <h2>Completed Letters</h2>
+    <alert-block v-if="completedLetters == null || completedLetters.legnth == 0" alertMessage="There are no completed letters to view.">
+    </alert-block>
   </div>
 </template>
 

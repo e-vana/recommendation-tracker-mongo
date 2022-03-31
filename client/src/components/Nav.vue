@@ -2,10 +2,13 @@
         <div class="nav">
         <ul>
           <li v-if="routeName != 'Home'"><router-link to="/">Home</router-link></li>
-          <li v-if="!$store.state.isLoggedIn && routeName != 'Login'"><router-link to="/login"><button class="button-login">Login</button></router-link></li>
-          <li v-if="!$store.state.isLoggedIn && routeName != 'Register' "><router-link to="/register"><button class="button-login">Sign Up</button></router-link></li>
-          <li v-if="$store.state.isLoggedIn && routeName != 'Dashboard'"><router-link to="/dashboard"><button class="button-login">Dashboard</button></router-link></li>
+          <li v-if="!$store.state.isLoggedIn && routeName != 'Login'"><router-link to="/login">Login</router-link></li>
+          <li v-if="!$store.state.isLoggedIn && routeName != 'Register' "><router-link to="/register">Sign Up</router-link></li>
+          <li v-if="$store.state.isLoggedIn && routeName != 'Dashboard'"><router-link to="/dashboard">Dashboard</router-link></li>
           <li v-if="$store.state.isLoggedIn"><button @click="signOut" class="button-login">Sign Out</button></li>
+          <li v-if="$store.state.isLoggedIn"><router-link to="/settings">Settings</router-link></li>
+          <li ><router-link to="/settings">Settings</router-link></li>
+
 
 
         </ul>
@@ -62,7 +65,12 @@ export default {
 }
 .nav a {
   text-decoration: none;
-
+}
+.nav a:hover {
+  text-decoration: underline;
+}
+.nav a:visited {
+  color: var(--primary-black);
 }
 .settings-icon img {
   height: 50px;

@@ -133,7 +133,7 @@ input {
 }
 
 .register-help-text{
-  font-size: 10px;
+  font-size: 12px;
   color: var(--primary-black-lightest);
   margin: 5px 0px;
 }
