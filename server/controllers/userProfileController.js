@@ -2,6 +2,18 @@ const { User } = require("../models/user");
 const { UserProfile } = require("../models/userProfile");
 
 const userProfileController = {
+  getProfiles: async function (req, res) {
+    try {
+      let getAUsersProfiles = await UserProfile.find({user: req.body.userId});
+      if(getAUsersProfiles.length == 0){
+        throw {message: "No profiles found for this userId."}
+      }
+      res.send({success: true, profiles: getAUsersProfiles});
+    } catch (error) {
+      res.status(400).json({ success: false, error: error.message });
+      
+    }
+  },
   createProfile: async function (req, res) {
     try {
       //A middleware on the route adds the userID from the JSON web token to the HTTP request body
