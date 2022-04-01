@@ -8,7 +8,9 @@
         <button class="button-primary" @click="routeHandler">Instructor Signup</button>
       </div>
       <div class="hero-image">
-        <img src="@/assets/hero-banner.jpg" alt="">
+        <img src="@/assets/hero-banner-min.jpg" alt="">
+        <!-- <img src="@/assets/hero-banner.jpg" alt=""> -->
+
       </div>
       <!-- <a href="https://www.vecteezy.com/free-vector/kids">Kids Vectors by Vecteezy</a> -->
     </div>
