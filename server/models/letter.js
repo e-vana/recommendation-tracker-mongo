@@ -9,11 +9,6 @@ let letterSchema = mongoose.Schema(
       ref: User,
       required: true,
     },
-    profile: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: UserProfile,
-      required: true,
-    },
     studentFirstName: {
       type: String,
       required: true,
@@ -48,6 +43,9 @@ let letterSchema = mongoose.Schema(
     },
     studentLetterSubmissionDueDate: {
       type: Date,
+    },
+    studentCompleted: {
+      type: Boolean,
     },
   },
   { timestamps: true }

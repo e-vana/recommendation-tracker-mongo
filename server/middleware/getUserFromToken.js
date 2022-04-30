@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 const getUserIdFromToken = async function (req, res, next) {
   try {
     //get bearer token from HTTP request

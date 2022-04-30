@@ -3,13 +3,11 @@ require("dotenv").config();
 const { default: mongoose } = require("mongoose");
 const { app } = require("./setup");
 const port = process.env.PORT;
-const morgan = require("morgan")
+const morgan = require("morgan");
 const express = require("express");
-const { getUserIdFromToken } = require("./middleware/getUserFromToken");
-
 
 //@@ Use Middleware
-app.use(morgan('tiny'));
+app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(function (req, res, next) {
@@ -25,9 +23,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(getUserIdFromToken);
 app.use("/api/users", require("./routes/users"));
 app.use("/api/userProfiles", require("./routes/userProfiles"));
+app.use("/api/letters", require("./routes/letters"));
 
 //@@ Startup server and connect to database
 app.listen(port, async () => {

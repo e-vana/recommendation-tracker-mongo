@@ -25,7 +25,6 @@ const userController = {
       const saltValue = await bcrypt.genSaltSync(10);
       const hashed = await bcrypt.hashSync(req.body.password, saltValue);
 
-
       console.log(req.isInstructor);
       //create new user
       //if is Instructor is checked
@@ -78,7 +77,9 @@ const userController = {
   changePassword: async function (req, res) {
     try {
       //see if a user exists with this email
-      let userExists = await User.findOne({ email: req.body.email });
+      console.log(req.body);
+      let userExists = await User.findById(req.userId);
+      console.log(userExists);
       if (!userExists) {
         throw {
           message: "There's no account affiliated with this email address.",
@@ -92,7 +93,13 @@ const userController = {
       if (!isCorrectPassword) {
         throw { message: "Invalid password." };
       }
-      userExists.password = req.body.newPassword;
+
+      const saltValue = await bcrypt.genSaltSync(10);
+      const hashedNewPassword = await bcrypt.hashSync(
+        req.body.newPassword,
+        saltValue
+      );
+      userExists.password = hashedNewPassword;
       await userExists.save();
       res.status(200).json({ success: true });
       // //return a jsonwebtoken with userID embedded

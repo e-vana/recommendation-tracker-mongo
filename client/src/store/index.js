@@ -1,12 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     isLoggedIn: false,
-    userToken: null
+    userToken: null,
+  },
+  getters: {
+    getUserToken: (state) => {
+      return state.userToken;
+    },
   },
   mutations: {
     SET_LOGIN: (state, payload) => {
@@ -14,19 +19,18 @@ export default new Vuex.Store({
     },
     SET_TOKEN: (state, payload) => {
       state.userToken = payload;
-    }
+    },
   },
   actions: {
     login: (context) => {
       context.commit("SET_LOGIN", true);
     },
     logout: (context) => {
-      context.commit("SET_LOGIN", false)
+      context.commit("SET_LOGIN", false);
     },
     setToken: (context, token) => {
       context.commit("SET_TOKEN", token);
-    }
+    },
   },
-  modules: {
-  }
-})
+  modules: {},
+});

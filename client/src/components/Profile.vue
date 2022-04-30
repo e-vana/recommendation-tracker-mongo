@@ -1,31 +1,55 @@
 <template>
   <div class="profile-container">
     <div class="profile-block-left">
-      <b>{{profileName}}</b>
-      <br>
-      {{fullnameTitle}}
-      <br>
-      {{school}}
-      <br>
-      {{course}}
-      </div>
+      <b>{{ profileName }}</b>
+      <br />
+      {{ fullnameTitle }}
+      <br />
+      {{ school }}
+      <br />
+      {{ course }}
+    </div>
     <div class="profile-block-right">
-      <button class="button-delete">Delete</button>
+      <button class="button-delete" @click="tryDelete">Delete</button>
       <button class="button-edit">Edit</button>
     </div>
   </div>
 </template>
 
 <script>
+import loadingState from "@/mixins/loadingState";
+import axios from "axios";
 export default {
+  mixins: [loadingState],
   props: {
-          profileId: String,
-          profileName: String,
-          fullnameTitle: String,
-          school: String,
-          course: String
-  }
-}
+    profileId: String,
+    profileName: String,
+    fullnameTitle: String,
+    school: String,
+    course: String,
+  },
+  methods: {
+    deleteProfile: async function () {
+      try {
+        this.isLoading = true;
+        const config = {
+          headers: {
+            Authorization: `Bearer ` + this.$store.getters.token,
+          },
+        };
+        let tryDelete = await axios.post(
+          process.env.VUE_APP_BASE_URL + "/api/users/login",
+          config
+        );
+        console.log(tryDelete);
+      } catch (error) {
+        this.isLoading = false;
+
+        console.log(error);
+      }
+    },
+  },
+};
 </script>
 
 <style>
@@ -38,7 +62,6 @@ export default {
   padding: 20px;
   display: flex;
   margin: 10px 0px;
-
 }
 .button-delete {
   border: none;
@@ -62,6 +85,5 @@ export default {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.075);
   cursor: pointer;
   margin-left: 20px;
-
 }
 </style>
